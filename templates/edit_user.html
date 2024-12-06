@@ -1,0 +1,40 @@
+{%extends "main_layout_admin.html"%}
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center vh-100">
+    <div class="card p-4 shadow" style="width: 25rem;">
+        <h2 class="text-center mb-4">Edit User</h2>
+        <form method="POST">
+            <div class="mb-3">
+                <label for="nama" class="form-label">Nama</label>
+                <input type="text" id="nama" name="nama" class="form-control" placeholder="Nama" required value="{{user.nama}}">
+            </div>
+            <div class="mb-3">
+                <label for="tanggal" class="form-label">Tanggal Lahir</label>
+                <input type="date" id="tanggal" name="tanggal_lahir" class="form-control" placeholder="Tanggal Lahir"
+                    required value="{{user.tanggal_lahir}}">
+            </div>
+            <div class="mb-3">
+                <label for="alamat" class="form-label">Alamat</label>
+                <input type="text" id="alamat" name="alamat" class="form-control" placeholder="Alamat" required value="{{user.alamat}}">
+            </div>
+            
+            <button type="submit" class="btn btn-warning w-100">Edit</button>
+            <div class="row">
+                {% if edit_user_status == False %}
+                <div class="alert alert-danger  d-flex align-items-center mt-3" role="alert">
+                    <div>
+                        ⚠ Edit gagal, Username Sudah Pernah Digunakan Sebelumnya
+                    </div>
+                </div>
+                {% elif edit_user_status == True %}
+                <div class="alert alert-success  d-flex align-items-center mt-3" role="alert">
+                    <div>
+                        ✔ Edit Berhasil
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </form>
+    </div>
+</div>
+{%endblock%}
