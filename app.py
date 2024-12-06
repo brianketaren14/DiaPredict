@@ -20,7 +20,7 @@ db_config = {
     'database': 'diapredict'
 }
 
-model = pickle.load(open('model/xgb_hyper.pkl', 'rb'))
+model = pickle.load(open('model/gb_hyper_model.pkl', 'rb'))
 scalar = pickle.load(open('model/scalar.pkl', 'rb'))
 
 def encrypt_password(password):
