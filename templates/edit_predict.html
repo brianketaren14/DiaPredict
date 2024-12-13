@@ -1,0 +1,106 @@
+{%extends "main_layout_admin.html"%}
+{% block content %}
+<section class="form container mt-4">
+    <form method="POST" enctype="multipart/form-data">
+        <div class="row text-center">
+            <div class="d-flex align-items-center justify-content-center">
+                <img src="{{ url_for('static', filename='diabetes.png') }}" alt="" srcset="" width="50" height="50">
+                <h4>DiaPredict</h3>
+            </div>
+            <div>
+                <h4>Jangan biarkan diabetes mengganggu aktivitas anda </h2>
+                    <h6>Deteksi sekarang untuk hidup lebih baik</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="mb-3 col-12">
+                <label for="exampleFormControlInput1" class="form-label"><b>Nama</b></label>
+                <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Nama anda" disabled
+                    value="{{predicted.nama}}">
+                <input type="hidden" value="{{predicted.nama}}" name="nama">
+            </div>
+        </div>
+        <div class="row">
+            <div class="mb-3 col-md-6">
+                <label for="exampleFormControlInput1" class="form-label"><b>Umur</b></label>
+                <input type="number" class="form-control" id="exampleFormControlInput1" placeholder="Umur anda"
+                    name="umur" disabled value="{{predicted.age}}">
+                <input type="hidden" value="{{predicted.age}}" name="umur">
+
+            </div>
+            <div class="mb-3 col-md-6">
+                <label for="exampleFormControlInput1" class="form-label"><b>Diabetes Pedigree Function</b></label>
+                <input type="number" class="form-control" id="exampleFormControlInput1"
+                    placeholder="Diabetes Pedigree Function" name="DPF" step=any required value="{{predicted.DiabetesPedigreeFunction}}">
+            </div>
+        </div>
+        <div class="row">
+            <div class="mb-3 col-md-6">
+                <label for="exampleFormControlInput1" class="form-label"><b>Kehamilan</b></label>
+                <input type="number" class="form-control" id="exampleFormControlInput1"
+                    placeholder="Berapa kali anda hamil" name="kehamilan" required value="{{predicted.Pregnancies}}">
+            </div>
+            <div class="mb-3 col-md-6">
+                <label for="exampleFormControlInput1" class="form-label"><b>Glucose</b></label>
+                <input type="number" class="form-control" id="exampleFormControlInput1"
+                    placeholder="Konsentrasi glukosa plasma 2 jam dalam tes toleransi glukosa oral" name="glucose"
+                    step=any required value="{{predicted.Glucose}}">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label for="exampleFormControlInput1" class="form-label"><b>Blood Pressure</b></label>
+                <div class="input-group mb-3">
+                    <span class="input-group-text">mm/Hg</span>
+                    <input type="number" class="form-control" placeholder="Diastolic blood pressure"
+                        name="bloodpressure" step=any required value="{{predicted.BloodPressure}}">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <label for="exampleFormControlInput1" class="form-label"><b>Ketebalan Kulit</b></label>
+                <div class="input-group mb-3">
+                    <span class="input-group-text">mm</span>
+                    <input type="number" class="form-control" placeholder="Ketebalan kulit anda" name="ketebalankulit"
+                        step=any required value="{{predicted.SkinThickness}}">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label for="exampleFormControlInput1" class="form-label"><b>Insulin</b></label>
+                <div class="input-group mb-3">
+                    <span class="input-group-text">mu U/ml</span>
+                    <input type="number" class="form-control" placeholder="Insulin serum 2 jam" name="insulin" step=any
+                        required value="{{predicted.Insulin}}">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <label for="exampleFormControlInput1" class="form-label"><b>BMI</b></label>
+                <div class="input-group mb-3">
+                    <span class="input-group-text">kg/m^2</span>
+                    <input type="number" class="form-control" placeholder="Body mass index" name="BMI" step=any
+                        required value="{{predicted.BMI}}">
+                </div>
+            </div>
+        </div>
+        <section class="d-flex justify-content-center gap-2 mt-3">
+            <button type="submit" class="btn btn-warning" name="edit">Edit</button>
+        </section>
+        <div class="row">
+            {% if edit_predicted_status == True %}
+            <div class="alert alert-success  d-flex align-items-center mt-3" role="alert">
+                <div>
+                    ✔ Edit Data Berhasil
+                </div>
+            </div>
+            {% elif edit_predicted_status == False %}
+            <div class="alert alert-danger  d-flex align-items-center mt-3" role="alert">
+                <div>
+                    ✖ Edit Data Gagal
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </form>
+</section>
+{% endblock %}

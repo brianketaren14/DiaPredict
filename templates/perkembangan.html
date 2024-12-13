@@ -1,0 +1,146 @@
+{%extends "main_layout.html"%}
+{% block content %}
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+    google.charts.load('current', { 'packages': ['corechart'] });
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+        // General options
+        var options = {
+            backgroundColor: '#ffffff1a',
+            hAxis: {
+                title: 'Time',
+                format: "yyyy, MMM dd" // Adjust format as needed
+            },
+            legend: { position: 'top' },
+            chartArea: { width: '80%', height: '80%' },
+            series: {
+                0: { pointSize: 5 } // Adds marker "o" at data points
+            }
+        };
+
+        function chartdata(data) {
+            return google.visualization.arrayToDataTable(
+                data.map((row, index) => {
+                    if (index === 0) return row; // Keep the header row unchanged
+                    // Convert waktu_predict (assuming it's a string) to a Date object
+                    const date = row[0]; // row[0] is waktu_predict
+                    return [date, row[1]]; // row[1] is the value
+                })
+            );
+        }
+
+        function handleChart(data, containerId, options) {
+            if (data.length > 1) {
+                const chartData = chartdata(data);
+                const chart = new google.visualization.LineChart(document.getElementById(containerId));
+                chart.draw(chartData, options);
+            } else {
+                document.getElementById("container").style.display = 'none';
+                document.getElementById('pesan_kosong').innerHTML = '<h3>Data Kosong, Input Data terlebih Dahulu</h3>';
+            }
+        }
+
+        // List of chart endpoints and configurations
+        const charts = [
+            { endpoint: '/get_pregnancies_data', containerId: 'Pregnancies', title: 'Pregnancies Over Time', vAxisTitle: 'Pregnancies' },
+            { endpoint: '/get_glucose_data', containerId: 'Glucose', title: 'Glucose Level Over Time', vAxisTitle: 'Glucose' },
+            { endpoint: '/get_BloodPressure_data', containerId: 'bloodpressure', title: 'Blood Pressure Level Over Time', vAxisTitle: 'Blood Pressure' },
+            { endpoint: '/get_SkinThickness_data', containerId: 'SkinThickness', title: 'Skin Thickness Over Time', vAxisTitle: 'Skin Thickness' },
+            { endpoint: '/get_Insulin_data', containerId: 'Insulin', title: 'Insulin Level Over Time', vAxisTitle: 'Insulin' },
+            { endpoint: '/get_BMI_data', containerId: 'BMI', title: 'BMI Level Over Time', vAxisTitle: 'BMI' },
+            { endpoint: '/get_DPF_data', containerId: 'DiabetesPedigreeFunction', title: 'DPF Level Over Time', vAxisTitle: 'DPF' },
+            { endpoint: '/get_prediksi_data', containerId: 'prediksi', title: 'Prediction Over Time', vAxisTitle: 'Prediction' }
+        ];
+
+        // Fetch and handle each chart
+        charts.forEach(chart => {
+            fetch(chart.endpoint)
+                .then(response => response.json())
+                .then(data => {
+                    const chartOptions = {...options, title: chart.title, vAxis: { title: chart.vAxisTitle } };
+                    handleChart(data, chart.containerId, chartOptions);
+                });
+        });
+    }
+</script>
+    <div class="container" id="pesan_kosong">
+    
+    </div>
+<section class="container mt-3 mb-5 rounded-4 bg-white p-2" id="container">
+
+    <div class="row d-flex justify-content-between">
+        <div class="col-md-4 mb-5">
+            <div id="Pregnancies" class="w-100 h-100"></div>
+        </div>
+        <div class="col-md-4 mb-5">
+            <div id="Glucose" class="w-100 h-100"></div>
+        </div>
+        <div class="col-md-4 mb-5">
+            <div id="bloodpressure" class="w-100 h-100"></div>
+        </div>
+    </div>
+    <div class="row d-flex justify-content-between">
+        <div class="col-md-4 mb-5">
+            <div id="SkinThickness" class="w-100 h-100"></div>
+        </div>
+        <div class="col-md-4 mb-5">
+            <div id="Insulin" class="w-100 h-100"></div>
+        </div>
+        <div class="col-md-4 mb-5">
+            <div id="BMI" class="w-100 h-100"></div>
+        </div>
+    </div>
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-4 mb-5">
+            <div id="DiabetesPedigreeFunction" class="w-100 h-100"></div>
+        </div>
+        <div class="col-md-4 mb-5">
+            <div id="prediksi" class="w-100 h-100"></div>
+        </div>
+    </div>
+</section>
+<section class="">
+    <table class="table table-striped table-hover table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">Pregnancies</th>
+                <th scope="col">Glucose</th>
+
+                <th scope="col">Blood<br>Pressure</th>
+                <th scope="col">Skin<br>Thickness</th>
+                <th scope="col">Insulin</th>
+                <th scope="col">BMI</th>
+                <th scope="col">DPF</th>
+                <th scope="col">Prediksi</th>
+                <th scope="col">Waktu<br>Prediksi</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for data in predicted %}
+            <tr>
+                <td>{{data.Pregnancies}}</td>
+                <td>{{data.Glucose}}</td>
+                <td>{{data.BloodPressure}}</td>
+                <td>{{data.SkinThickness}}</td>
+                <td>{{data.Insulin}}</td>
+                <td>{{data.BMI}}</td>
+                <td>{{data.DiabetesPedigreeFunction}}</td>
+                <td>{{data.prediksi}}</td>
+                <td>{{data.waktu_predict}}</td>
+                <td>
+        
+                    <a class="btn btn-warning me-2" href="/edit_perkembangan/{{data.predict_id}}">edit</a>
+                    <a class="btn btn-danger" href="/delete_perkembangan/{{data.predict_id}}"
+                        onclick="return confirm('Yakin ingin menghapus?')">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
+{% endblock %}
+
+    

@@ -1,0 +1,176 @@
+{%extends "main_layout.html"%}
+{% block content %}
+<section class="form container mt-4">
+  <form  method="POST" enctype="multipart/form-data">
+    <div class="row text-center">
+      <div class="d-flex align-items-center justify-content-center">
+        <img src="static/diabetes.png" alt="" srcset="" width="50" height="50">
+        <h4>DiaPredict</h3>
+      </div>
+      <div >
+        <h4 id="diapredict_statement">Jangan biarkan diabetes mengganggu aktivitas anda </h2>
+          <h6>Deteksi sekarang untuk hidup lebih baik</h3>
+      </div>
+    </div>
+    <div class="row">
+      <div class="mb-3 col-12">
+        <label for="exampleFormControlInput1" class="form-label"><b>Nama</b></label>
+        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Nama anda" disabled value="{{nama}}">
+        <input type="hidden" value="{{nama}}" name="nama">
+      </div>
+    </div>
+    <div class="row">
+      <div class="mb-3 col-md-6">
+        <label for="exampleFormControlInput1" class="form-label"><b>Umur</b></label>
+        <input type="number" class="form-control" id="exampleFormControlInput1" placeholder="Umur anda" name="umur" disabled value="{{umur}}">
+        <input type="hidden"  value="{{umur}}" name="umur">
+
+      </div>
+      <div class="mb-3 col-md-6">
+        <label for="exampleFormControlInput1" class="form-label"><b>Diabetes Pedigree Function</b></label>
+        <input type="number" class="form-control" id="exampleFormControlInput1" placeholder="Diabetes Pedigree Function"
+          name="DPF" step=any required>
+      </div>
+    </div>
+    <div class="row">
+      <div class="mb-3 col-md-6">
+        <label for="exampleFormControlInput1" class="form-label"><b>Kehamilan</b></label>
+        <input type="number" class="form-control" id="exampleFormControlInput1" placeholder="Berapa kali anda hamil"
+          name="kehamilan" required>
+      </div>
+      <div class="mb-3 col-md-6">
+        <label for="exampleFormControlInput1" class="form-label"><b>Glucose</b></label>
+        <input type="number" class="form-control" id="exampleFormControlInput1"
+          placeholder="Konsentrasi glukosa plasma 2 jam dalam tes toleransi glukosa oral" name="glucose" step=any required>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <label for="exampleFormControlInput1" class="form-label"><b>Blood Pressure</b></label>
+        <div class="input-group mb-3">
+          <span class="input-group-text">mm/Hg</span>
+          <input type="number" class="form-control" placeholder="Diastolic blood pressure" name="bloodpressure" step=any required>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <label for="exampleFormControlInput1" class="form-label"><b>Ketebalan Kulit</b></label>
+        <div class="input-group mb-3">
+          <span class="input-group-text">mm</span>
+          <input type="number" class="form-control" placeholder="Ketebalan kulit anda" name="ketebalankulit" step=any required>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <label for="exampleFormControlInput1" class="form-label"><b>Insulin</b></label>
+        <div class="input-group mb-3">
+          <span class="input-group-text">mu U/ml</span>
+          <input type="number" class="form-control" placeholder="Insulin serum 2 jam" name="insulin" step=any required>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <label for="exampleFormControlInput1" class="form-label"><b>BMI</b></label>
+        <div class="input-group mb-3">
+          <span class="input-group-text">kg/m^2</span>
+          <input type="number" class="form-control" placeholder="Body mass index" name="BMI" step=any required>
+        </div>
+      </div>
+    </div>
+    <section class="d-flex justify-content-center gap-2 mt-3">
+      <button type="submit" class="btn btn-success" name="predict">Predict</button>
+      <button type="reset" class="btn btn-danger" name="reset"><a href="{{url_for('reset')}}" style="text-decoration:none; color:white;">Reset</a></button>
+    </section>
+  </form>
+</section>
+        <section class="mt-5 mb-5">
+          {% if hasil_prediksi[0] == 1%}
+          <div class="diabetes">
+            <div class="mt-3 result-warning border border-danger border-4 container p-3 col-8">
+              <div class="d-flex gap-2 mb-3">
+                <img src="static/warning.png" alt="" height="30" width="30">
+                <h5>{{nama}} Anda Berpotensi Diabetes</h5>
+              </div>
+              <div class="detail-warning border-top border-3 border-danger pt-3">
+                <p>Perhatian, berdasarkan hasil analisis, anda terdeteksi memiliki kemungkinan gejala diabetes. Kami sangat
+                  menyarankan Anda untuk segera berkonsultasi dengan dokter atau profesional kesehatan untuk pemeriksaan
+                  lebih lanjut dan tindakan yang diperlukan.</p>
+              </div>
+            </div>
+            <div class="mt-3 result-warning border border-danger border-4 container p-3 col-8">
+              <div class="pt-3">
+                <p><b>Diabetes</b> adalah penyakit metabolik kronis yang ditandai dengan kadar gula darah (glukosa) yang tinggi
+                  akibat gangguan
+                  pada produksi atau fungsi insulin, hormon yang mengatur kadar gula dalam darah. Terdapat dua jenis utama
+                  diabetes, yaitu
+                  Diabetes Tipe 1 dan Diabetes Tipe 2. Diabetes Tipe 1 disebabkan oleh kerusakan sel pankreas yang membuat tubuh
+                  tidak
+                  dapat memproduksi insulin. Sementara itu, Diabetes Tipe 2, yang lebih umum, terjadi karena resistensi tubuh
+                  terhadap
+                  insulin atau kurangnya produksi insulin, biasanya terkait dengan gaya hidup kurang sehat, seperti pola makan
+                  tinggi gula
+                  dan lemak, obesitas, serta kurang aktivitas fisik.
+                </p>
+                <p>Jika tidak dikelola dengan baik, diabetes dapat menyebabkan komplikasi serius, seperti penyakit jantung,
+                  kerusakan
+                  ginjal, gangguan penglihatan, dan masalah saraf. Pencegahan dan pengelolaan diabetes melibatkan pola makan
+                  seimbang,
+                  olahraga teratur, menjaga berat badan ideal, serta pemeriksaan kesehatan berkala. Untuk penderita diabetes,
+                  penting
+                  untuk mengikuti anjuran dokter dalam hal penggunaan obat atau insulin dan menjaga kadar gula darah tetap
+                  terkontrol.
+                  Edukasi mengenai diabetes sangat diperlukan agar masyarakat dapat mengenali gejala awal seperti sering haus,
+                  sering
+                  buang air kecil, penurunan berat badan tanpa sebab, dan mudah lelah, sehingga penanganan dini dapat dilakukan
+                  untuk
+                  mencegah komplikasi.
+                </p>
+              </div>
+            </div>
+          </div>
+          {% elif hasil_prediksi[0] == 0 %}
+          <div class="tidak_terkena">
+            <div class="mt-3 result-warning border border-success border-4 container p-3 col-8">
+              <div class="d-flex gap-2 mb-3">
+                <img src="static/safe.png" alt="" height="30" width="30">
+                <h5>{{nama}} Anda Tidak Berpotensi Diabetes</h5>
+              </div>
+              <div class="detail-warning border-top border-3 border-success pt-3">
+                <p>Hasil analisis menunjukkan bahwa Anda tidak terdeteksi memiliki gejala diabetes.</p>
+              </div>
+            </div>
+            <div class="mt-3 result-warning border border-success border-4 container p-3 col-8">
+              <div class="detail-warning pt-3">
+                <p>Namun, penting untuk diingat bahwa hasil tersebut bukan jaminan bebas diabetes seumur hidup. Gaya hidup dan
+                  faktor
+                  risiko seperti pola makan tidak sehat, kurang aktivitas fisik, obesitas, serta riwayat keluarga tetap dapat
+                  memicu
+                  diabetes di kemudian hari. Oleh karena itu, pasien dianjurkan untuk tetap menjaga pola hidup sehat guna
+                  mencegah risiko
+                  di masa depan. Beberapa langkah pencegahan yang disarankan meliputi mengonsumsi makanan tinggi serat dan
+                  rendah gula,
+                  berolahraga secara rutin, menjaga berat badan ideal, dan menghindari kebiasaan merokok atau konsumsi alkohol
+                  berlebihan.
+                  Keseimbangan antara asupan kalori dan pengeluaran energi juga menjadi kunci utama dalam mencegah terjadinya
+                  lonjakan
+                  berat badan yang bisa meningkatkan risiko resistensi insulin.
+                </p>
+                <p>
+                  Selain itu, bagi orang dengan faktor risiko tinggi, skrining gula darah secara berkala tetap diperlukan untuk
+                  memastikan
+                  kondisi kesehatan tetap terjaga. Prediksi negatif saat ini bisa berubah jika gaya hidup tidak diperhatikan,
+                  terutama di
+                  usia lanjut di mana metabolisme cenderung menurun. Penting juga bagi pasien untuk mempelajari gejala awal
+                  diabetes,
+                  seperti sering haus, mudah lelah, atau kesemutan, agar dapat segera mengambil tindakan jika kondisi berubah di
+                  masa
+                  mendatang. Dengan pemantauan dan pencegahan yang konsisten, pasien dapat meminimalkan risiko dan menjaga
+                  kualitas hidup
+                  yang optimal. Edukasi berkelanjutan mengenai diabetes dan pentingnya pencegahan dini sangat diperlukan agar
+                  masyarakat
+                  tetap waspada dan tidak terlena dengan hasil negatif.</p>
+              </div>
+            </div>
+          </div>
+          {% endif %}
+        </section>
+{% endblock %}

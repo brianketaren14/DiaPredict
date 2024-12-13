@@ -1,0 +1,52 @@
+{%extends "main_layout_admin.html"%}
+{% block content %}
+<section class="">
+    <table class="table table-striped table-hover table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">No</th>
+                <th scope="col">predict_id</th>
+                <th scope="col">user_id</th>
+                <th scope="col">Pregnancies</th>
+                <th scope="col">Glucose</th>
+
+                <th scope="col">Blood<br>Pressure</th>
+                <th scope="col">Skin<br>Thickness</th>
+                <th scope="col">Insulin</th>
+                <th scope="col">BMI</th>
+                <th scope="col">DPF</th>
+                <th scope="col">Age</th>
+                <th scope="col">Prediksi</th>
+                <th scope="col">Waktu<br>Prediksi</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% set index = 1 %}
+        {% for data in predicted %}
+            <tr>
+                <td>{{ index }}</td>
+                {% set index = index + 1 %}
+                <td>{{data.predict_id}}</td>
+                <td>{{data.user_id}}</td>
+                <td>{{data.Pregnancies}}</td>
+                <td>{{data.Glucose}}</td>
+                <td>{{data.BloodPressure}}</td>
+                <td>{{data.SkinThickness}}</td>
+                <td>{{data.Insulin}}</td>
+                <td>{{data.BMI}}</td>
+                <td>{{data.DiabetesPedigreeFunction}}</td>
+                <td>{{data.Age}}</td>
+                <td>{{data.prediksi}}</td>
+                <td>{{data.waktu_predict}}</td>
+                <td>
+                    
+                    <a class="btn btn-warning me-2" href="/edit_predict/{{data.predict_id}}">edit</a>
+                    <a class="btn btn-danger" href="/delete_predict/{{data.predict_id}}" onclick="return confirm('Yakin ingin menghapus?')">Delete</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</section>
+{% endblock %}

@@ -1,0 +1,129 @@
+{%extends "main_layout.html"%}
+{% block content %}
+<section class="container d-flex justify-content-center mt-5 mb-5">
+    <div class="col-md-8 border p-5 ">
+        <form action="{{url_for('update_account')}}" method="POST">
+            <div class="d-flex align-items-center gap-2">
+                <img src="static/user.png" style="width: 40px; height: 40px;">
+                <h4>Profil Pengguna</h4>
+            </div>
+            <div class="row mt-3">
+                <div class="mb-3 col-12">
+                    <label for="exampleFormControlInput1" class="form-label"><b>Nama Lengkap</b></label>
+                    <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Nama anda" name="nama"
+                        required, value="{{users['nama']}}">
+                </div>
+            </div>
+            <div class="row">
+                <div class="mb-3 col-12">
+                    <label for="exampleFormControlInput1" class="form-label"><b>Alamat</b></label>
+                    <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Alamat Anda" name="alamat"
+                        required value="{{users['alamat']}}">
+                </div>
+            </div>
+            <div class="row">
+                <div class="mb-3 col-12">
+                    <label for="exampleFormControlInput1" class="form-label"><b>Tanggal Lahir</b></label>
+                    <input type="date" class="form-control" id="exampleFormControlInput1" placeholder="Tanggal Lahir Anda" name="tanggal_lahir"
+                        required value="{{users['tanggal_lahir']}}">
+                </div>
+            </div>
+            <div>
+              <button type="submit" class="btn btn-primary" name="ubah">Simpan Perubahan</button>
+            </div>
+            {% if update_account_status == True %}
+            <div class="alert alert-success  d-flex align-items-center mt-3" role="alert">
+                <div>
+                        ✔ Update Berhasil
+                </div>
+            </div>
+            {% elif update_account_status == False %}
+            <div class="alert alert-danger  d-flex align-items-center mt-3" role="alert">
+                <div>
+                    ⚠ Update Gagal, Username Sudah Pernah Digunakan Sebelumnya
+                </div>
+            </div>
+            {% endif %}
+        </form>
+    </div>
+</section>
+
+<section class="container d-flex justify-content-center mt-5 mb-5">
+    <div class="col-md-8 border p-5 ">
+        <form action="{{url_for('edit_username')}}" method="POST">
+            <div class="row">
+                <h4>Ubah Username</h4>
+            </div>
+            <div class="row mt-3">
+                <div class="mb-3 col-12">
+                    <label for="exampleFormControlInput1" class="form-label"><b>Username</b></label>
+                    <input type="text" class="form-control" id="exampleFormControlInput1" name="username"
+                        required, value="{{users['username']}}">
+                </div>
+            </div>
+            <div class="">
+              <button type="submit" class="btn btn-primary" name="ubah">Simpan Perubahan</button>
+            </div>
+            {% if update_username_status == True %}
+            <div class="alert alert-success  d-flex align-items-center mt-3" role="alert">
+                <div>
+                    ✔ Update Username Berhasil
+                </div>
+            </div>
+            {% elif update_username_status == False %}
+            <div class="alert alert-danger  d-flex align-items-center mt-3" role="alert">
+                <div>
+                    ✖ Update Username Gagal
+                </div>
+                {% endif %}
+        </form>
+   
+</section>
+
+<section class="container d-flex justify-content-center mt-5 mb-5">
+    <div class="col-md-8 border p-5 ">
+        <form action="{{url_for('update_password')}}", method="POST">
+            <div class="row">
+                <h4>Ubah Password</h4>
+            </div>
+            <div class="row mt-3">
+                <div class="col-12">
+                    <label for="exampleFormControlInput1" class="form-label"><b>Password Lama</b></label>
+                    <input type="password" class="form-control" id="exampleFormControlInput1" placeholder="Masukkan Password Lama"
+                        name="password_lama" required>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-12">
+                    <label for="exampleFormControlInput1" class="form-label"><b>Password Baru</b></label>
+                    <input type="password" class="form-control" id="exampleFormControlInput1" placeholder="Masukkan Password Baru"
+                        name="password_baru" required>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="mb-3 col-12">
+                    <label for="exampleFormControlInput1" class="form-label"><b>Konfirmasi Password Baru</b></label>
+                    <input type="password" class="form-control" id="exampleFormControlInput1" placeholder="Konfirmasi Password Baru"
+                        name="confirm_password" required>
+                </div>
+            </div>
+
+            <div>
+                <button type="submit" class="btn btn-danger" name="ubah">Simpan Perubahan</button>
+            </div>
+            {% if status_ubah_password == True %}
+            <div class="alert alert-success  d-flex align-items-center mt-3" role="alert">
+                <div>
+                    ✔ Update Password Berhasil
+                </div>
+            </div>
+            {% elif status_ubah_password == False %}
+            <div class="alert alert-danger  d-flex align-items-center mt-3" role="alert">
+                <div>
+                    ✖ Update Password Gagal
+                </div>
+            {% endif %}
+        </form>
+    </div>
+</section>
+{%endblock%}
